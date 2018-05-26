@@ -5,6 +5,23 @@ import serial
 import serial.tools.list_ports
 from os import system
 
+#declare some colors to work with
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+
+    def disable(self):
+        self.HEADER = ''
+        self.OKBLUE = ''
+        self.OKGREEN = ''
+        self.WARNING = ''
+        self.FAIL = ''
+        self.ENDC = ''
+
 # Instantiate ArgumentParser
 parser = argparse.ArgumentParser(description='Hacking with the Arduino Uno')
 parser.add_argument('--flash', '-f', action="store_true",
@@ -27,13 +44,13 @@ if args.detect:
     ]
 
     if not arduino_ports:
-        print "No Arduino found! If it is flashed, it will not be detected"
+        print bcolors.WARNING + "No Arduino found! If it is flashed, it will not be detected" + bcolors.ENDC
     else:
         ser = serial.Serial(arduino_ports[0])
-        print "Arduino found! "
+        print bcolors.OKGREEN + "Arduino found! " + bcolors.ENDC
 
     if len(arduino_ports) > 1:
-        print 'Multiple Arduinos found!'
+        print bcolors.OKBLUE + 'Multiple Arduinos found!' + bcolors.ENDC
 
 # Flash as HID
 elif args.flash:
