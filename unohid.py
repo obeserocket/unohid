@@ -30,6 +30,9 @@ parser.add_argument('--unflash', '-uf', action="store_true",
     help='Flash with default firmware')
 parser.add_argument('--detect', '-d', action="store_true",
     help='Detects whether a default arduino is plugged in')
+parser.add_argument('--upload', '-u', action="store_true",
+    help='upload a file to the arduino')
+
 
 
 # Parse arguments
@@ -48,6 +51,8 @@ if args.detect:
     else:
         ser = serial.Serial(arduino_ports[0])
         print bcolors.OKGREEN + "Arduino found! " + bcolors.ENDC
+	if args.upload:
+	    system("")
 
     if len(arduino_ports) > 1:
         print bcolors.OKBLUE + 'Multiple Arduinos found!' + bcolors.ENDC
