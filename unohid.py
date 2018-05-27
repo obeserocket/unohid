@@ -31,8 +31,6 @@ parser.add_argument('--unflash', '-uf', action="store_true",
     help='Flash with default firmware')
 parser.add_argument('--detect', '-d', action="store_true",
     help='Detects whether a default arduino is plugged in')
-parser.add_argument('path', nargs='+',
-                    help='the file name to upload to')
 parser.add_argument('--upload', '-u', action="store_true",
     help='upload a file to the arduino')
 
@@ -75,7 +73,7 @@ elif args.unflash:
     print "Done! Arduino is back to default mode\n"
 
 elif args.upload:
-    system("sudo make -C sketches -f " + re.sub('[\']', '', str(args.path)) + " && sudo make upload -C sketches/ -f " + str(args.path) + " && sudo make clean -C sketches/")
+    system("sudo make -C sketches/ && sudo make upload -C sketches/ && sudo make clean -C sketches/")
 
 # Print default help if none provided
 else:
