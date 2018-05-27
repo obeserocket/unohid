@@ -4,6 +4,7 @@ import argparse
 import serial
 import serial.tools.list_ports
 from os import system
+import re
 
 #declare some colors to work with
 class bcolors:
@@ -30,9 +31,10 @@ parser.add_argument('--unflash', '-uf', action="store_true",
     help='Flash with default firmware')
 parser.add_argument('--detect', '-d', action="store_true",
     help='Detects whether a default arduino is plugged in')
+parser.add_argument('path', nargs='+',
+                    help='the file name to upload to')
 parser.add_argument('--upload', '-u', action="store_true",
     help='upload a file to the arduino')
-
 
 
 # Parse arguments
@@ -51,9 +53,6 @@ if args.detect:
     else:
         ser = serial.Serial(arduino_ports[0])
         print bcolors.OKGREEN + "Arduino found! " + bcolors.ENDC
-	if args.upload:
-	    system("")
-
     if len(arduino_ports) > 1:
         print bcolors.OKBLUE + 'Multiple Arduinos found!' + bcolors.ENDC
 
@@ -74,6 +73,9 @@ elif args.unflash:
     system("dfu-programmer atmega16u2 flash --debug 1 hex/Arduino-usbserial.hex")
     system("dfu-programmer atmega16u2 reset")
     print "Done! Arduino is back to default mode\n"
+
+elif args.upload:
+    system("sudo make -C sketches -f " + re.sub('[\']', '', str(args.path)) + " && sudo make upload -C sketches/ -f " + str(args.path) + " && sudo make clean -C sketches/")
 
 # Print default help if none provided
 else:
